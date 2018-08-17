@@ -6,13 +6,11 @@
 #include "string.h"
 
 typedef struct Point {
-  int x;
-  int y;
   struct stack* prt;
 }Point;
 
 int pop(Stack* stack);
-
+// void pop_recursive(Stack* stack, int k, FILE *output_file);
 //int main(int argc, char *argv[])
 int main()
 
@@ -26,7 +24,7 @@ int main()
 
 	/* Abrimos el archivo input en modo de lectura */
 	//FILE *input_file = fopen(argv[1], "r");
-  FILE *input_file = fopen("../../tests/test_01.txt", "r");
+  FILE *input_file = fopen("../../tests/test_02.txt", "r");
 
 	/* Abrimos el archivo output en modo de escritura */
 	FILE *output_file = fopen("output.txt", "w");
@@ -51,6 +49,7 @@ int main()
     }
   }*/
 
+  // confeccionamos la matriz nxm, solictamos memoria e iniciamos los stacks
   Point*** points = malloc(sizeof(Point**)*n);
   for (int t = 0; t < n; t++){
     points[t] = malloc(sizeof(Point*)*m);
@@ -59,13 +58,6 @@ int main()
       points[t][z] -> prt = stack_init();
     }
   }
-
-
-
-
-  // declaro un areglo de colores
-  //char *colores[30] = {"verde", "rojo", "azul", "amarillo", "morado", "vacio"};
-  // hacemos la matriz
 
 	for (i = 0; i < l; i++) // recorremos las lineas del texto
 	{
@@ -77,148 +69,57 @@ int main()
     printf("%d %d %d %d\n", o, r, c, k);
 
 		//////////////// Aqui agrega tu código ///////////////////
-    /*Point *(points[n][m]);
-    if (points[r][c] -> stk == NULL){
-      points[r][c] = (Point *)malloc(sizeof(Point));
-      points[r][c] -> stk = stack_init();
-      if(o == 0){
-        push(points[r][c] -> stk, k);
-        printf("Primera bola en posicion %d %d de color %d\n", r, c, points[r][c] -> stk -> first -> color);
-        printf("Ultima bola en posicion %d %d de color %d\n", r, c, points[r][c] -> stk -> last -> color);
-        printf("Numero de bolas del stack %d\n", points[r][c] -> stk -> count);
-      }else{
-        //pop(record[r][c]);
-        printf("todavía no implementado\n");
-      }
-    }else{
-      if(o == 0){
-        push(points[r][c] -> stk, k);
-        printf("Primera bola en posicion %d %d de color %d\n", r, c, points[r][c] -> stk -> first -> color);
-        printf("Ultima bola en posicion %d %d de color %d\n", r, c, points[r][c] -> stk -> last -> color);
-        printf("Numero de bolas del stack %d\n", points[r][c] -> stk -> count);
-      }else{
-        //pop(record[r][c]);
-        printf("todavía no implementado\n");
-      }
-    }
-    free(points[r][c]);*/
 
 
     if(o == 0){
-      //printf("linea %d\n", i + 1);
       push(points[r][c] -> prt, k);
-      //push(points[r][c] -> prt, 6);
-      printf("Primera bola en posición %d %d de color %d\n", r, c, points[r][c] -> prt -> first -> color);
-      printf("Ultima bola en posición %d %d de color %d\n", r, c, points[r][c] -> prt -> last -> color);
+      printf("Primera bola en posición %d %d de color %d\n", r, c, k);
+      printf("Ultima bola en posición %d %d de color %d\n", r, c, k);
       printf("Numero de bolas del stack %d\n", points[r][c] -> prt -> count);
       printf("------------------------------\n");
-      /*Node * tmp = points[r][c] -> prt -> first;
-      while (tmp != NULL) {
-          printf("%d\n", tmp->color);
-          tmp = tmp->next;
-      }
-      free(tmp);
-      printf("------------------------------\n");*/
     }else{
-      //printf("linea %d\n", i + 1);
-      if (points[r][c] -> prt -> count > 0){
-        printf("se debería sacar una bola\n");
-        bola_sale = pop(points[r][c] -> prt);
-        printf("Se sacó bola %d de la posición %d %d\n", bola_sale, r, c);
-        printf("Numero de bolas del stack %d\n", points[r][c] -> prt -> count);
+      if (points[r][c] -> prt -> count == 0){
+        //fprintf(output_file, "%s en posicion %d %d\n", "vacio", r, c);
+        fprintf(output_file, "%s\n", "vacio");
+      }else{
+        // hay una o más bolas en el satck
+        bola_sale = pop(points[r][c] -> prt); // sscamos una
+        //fprintf(output_file, "%d en posicion %d %d\n", bola_sale, r, c);
+        fprintf(output_file, "%d\n", bola_sale);
+        if (points[r][c] -> prt -> count == 0){
+          if(bola_sale != k){
+            fprintf(output_file, "%s\n", "vacio");
+          }
+        }else{
+          if (bola_sale != k){
+            while(points[r][c] -> prt -> count >= 1){
+              bola_sale = pop(points[r][c] -> prt);
+              fprintf(output_file, "%d\n", bola_sale);
+              if(bola_sale == k){
+                break;
+              }
+            }
+            if(bola_sale != k){
+              fprintf(output_file, "%s\n", "vacio");
+            }
+          }
+        }
       }
     }
-
-    /*struct stack *record[t][z];
-    for (t = 0; t < n; t++){
-      for (z = 0; z < m; z++){
-        if(t == r && z == c){
-          if(o == 0){
-            points[t][z] -> x = r;
-            points[t][z] -> y = c;
-
-            push(points[t][z], k);
-            printf("Primera bola en posicion %d %d de color %d\n", r, c, points[t][z] -> first -> color);
-            printf("Ultima bola en posicion %d %d de color %d\n", r, c, points[t][z] -> last -> color);
-            printf("Numero de bolas del stack %d\n", points[t][z] -> count);
-            if (A[t][z] == 0){
-              struct stack *p = stack_init();
-
-              record[t][z] = p;
-              push(record[t][z], k);
-              printf("Primera bola en posicion %d %d de color %d\n", r, c, record[t][z] -> first -> color);
-              printf("Ultima bola en posicion %d %d de color %d\n", r, c, record[t][z] -> last -> color);
-              printf("Numero de bolas del stack %d\n", record[t][z] -> count);
-              A[t][z] = 1;
-            }else{
-              push(record[t][z], k);
-              printf("Primera bola en posicion %d %d de color %d\n", r, c, record[t][z] -> first -> color);
-              printf("Ultima bola en posicion %d %d de color %d\n", r, c, record[t][z] -> last -> color);
-              printf("Numero de bolas del stack %d\n", record[t][z] -> count);
-            }
-          }else{
-            //pop(record[r][c]);
-            printf("todavía no implementado\n");
-          }
-        }
-      }
-    }*/
-    //leer_matriz(A, n, m, r, c);
-    //printf("%d\n", A[r][c] -> count);
-    //push(A[r][c], k);
-    // para ocupar menos memoria lo ponemos aquí
-    /*if (o == 0){
-      push(record[r][c], k);
-      //push(record[k][j], k);
-      //push(record[k][j], 6);
-      printf("Primera bola en posicion %d %d de color %d\n", r, c, record[r][c] -> first -> color);
-      printf("Ultima bola en posicion %d %d de color %d\n", r, c, record[r][c] -> last -> color);
-      printf("Numero de bolas del stack %d\n", record[r][c] -> count);
-    }else{
-      //pop(record[r][c]);
-      printf("todavía no implementado\n");
-    }*/
-
-    /*record[r][c] -> x = r;
-    record[r][c] -> y = c;
-    if (o == 0){
-      // printf("bola???? %d\n", record[r][c] -> first -> color);
-
-      //push(record[r][c], 2);
-      //push(record[r][c], 6);
-      printf("Primera bola en posicion %d %d de color %d\n", r, c, record[r][c] -> first -> color);
-      printf("Ultima bola en posicion %d %d de color %d\n", r, c, record[r][c] -> first -> color);
-      printf("Numero de bolas del stack %d\n", record[r][c] -> count);
-      //printList(record[r][c]);
-    }else{
-      //printf("Se sacó una bola %d\n", pop(record[r][c] -> first, 1));
-
-    }*/
-    /*for (k = 0; k < m; k++){
-      for (j = 0; j < m; j++){
-        //record[i][j] = p;
-        //record[i][j] -> x = i;
-        //record[i][j] -> y = j;
-        //printf("la i y la j %d %d\n", i, j);
-        //printf("la r y la c %d %d\n", r, c);
-        if (k == r && j == c){
-          // printf("cuando hay match %d %d\n", k, j);
-          if (o == 0){
-            push(record[k][j], k);
-            push(record[k][j], k);
-            push(record[k][j], 6);
-            printf("Primera bola en posicion %d %d de color %d\n", r, c, record[k][j] -> first -> color);
-            printf("Ultima bola en posicion %d %d de color %d\n", r, c, record[k][j] -> last -> color);
-            printf("Numero de bolas del stack %d\n", record[k][j] -> count);
-          }else{
-            printf("todavía no implementado\n");
-          }
-        }
-      }
-    }*/
+      printf("Se sacó bola %d de la posición %d %d\n", bola_sale, r, c);
+      printf("Numero de bolas del stack %d\n", points[r][c] -> prt -> count);
   }
 
-  // liberamos la memoria
+  // liberamos la memoria de los stack
+  for (t = 0; t < n; t++){
+    for (z = 0; z < m; z++){
+      destroy(points[t][z] -> prt);
+      free(points[t][z]);
+    }
+  }
+
+
+  // liberamos la memoria de la matriz
   for (int t = 0; t < n; t++){
     free(points[t]);
   }
@@ -237,11 +138,31 @@ int main()
 }
 
 
+void destroy(Stack *stack){
+  free(stack);
+}
+/*void destroy(Stack *stack)
+{
+  int i = 0;
+  Node *tmp = node_init(7);
+  while(i < stack -> count - 1 ){
+    tmp = stack -> first;
+    tmp -> next = stack -> first -> next;
+    free(stack -> first);
+    tmp = tmp -> next;
+    i++;
+  }
+  //free(stack -> last);
+  free(tmp);
+  free(stack);
+}*/
 
 int pop(Stack* stack){
   int value;
-  Node * temp = stack -> first;
-  Node * previousToTail;
+  Node * temp = node_init(7);
+  temp = stack -> first;
+  Node * previousToTail = node_init(7);
+  // si el stack esta vacío
   if (stack -> last == NULL){
     free(temp);
     return 7;
@@ -250,6 +171,7 @@ int pop(Stack* stack){
     if (temp == stack -> last) {
           value = temp -> color;
           free(stack -> last);
+          //free(temp);
     } else {
           previousToTail = temp;
           while (previousToTail -> next != stack -> last){
@@ -258,8 +180,29 @@ int pop(Stack* stack){
           value = previousToTail -> next -> color;
           stack -> last = previousToTail;
           free(stack -> last -> next);
+          //free(previousToTail);
     }
     stack -> count--;
+    //free(temp);
     return value;
   }
 }
+
+/*void pop_recursive(Stack * stack, int k, FILE *output_file){
+  int bola_sale;
+  bola_sale = pop(stack);
+  if (stack -> count == 0){
+    if (bola_sale == k){
+      fprintf(output_file, "%d\n", k);
+    }else{
+      fprintf(output_file, "%s\n", "vacio");
+    }
+  }
+  else{
+    if (bola_sale == k){
+      fprintf(output_file, "%d\n", k);
+    }else{
+      pop_recursive(stack, k, output_file);
+    }
+  }
+}*/
