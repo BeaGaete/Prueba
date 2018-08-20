@@ -1,4 +1,7 @@
 import pandas as pd
+from functools import reduce
+from graphics import *
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -10,10 +13,12 @@ NAVALUES = ["#N/A", "#N/A N/A", "#NA", "-1.#IND", "-1.#QNAN", "-NaN", "-nan",
 
 class ProgramacionAvanzada:
 
-    def __init__(self, path1):
+    def __init__(self, path1, filename):
         self.path = path1
         self.data = pd.read_csv(self.path, header=0, delim_whitespace=False,
                                 na_values=NAVALUES)
+        self._array = list()
+        self.chart = Chart(self.data, filename)
 
 
     # retorna todas las notas de un alumno en un semestre
@@ -69,24 +74,68 @@ class ProgramacionAvanzada:
         #for k, v in dic:
             #print(k, (sum(dic[k])/len(dic[k])))
 
-    # e es una tupla
-    def agrupar(self):
-        lista = list()
+
+    def set_array(self):
+        no_ordenados = list()
         for e in self.get_df().groupby(['ano', 'semestre']): # son 10 e
+            lista = list()
             for ee in e[1].groupby(['alumno']):
                 dataframe = ee[1] # dataframe alumno semestre año
-                lista.append((self.nota_final_alumno(dataframe), e[0]))
-        return lista
+                lista.append(self.nota_final_alumno(dataframe))
+            suma_notas_sem = reduce(lambda x, y: float(x) + float(y), lista)
+            no_ordenados.append((round(
+                suma_notas_sem/len(lista), 2), e[0], np.std(lista)))
+        i = 9
+        while i >= 2:
+            self._array.append(no_ordenados[i])
+            self._array.append(no_ordenados[i-1])
+            i -= 2
+        self._array.append(no_ordenados[i])
+        self._array.append(no_ordenados[i - 1])
+
+
+            # print(suma_notas_sem/, e[0]) # imprime promedio de notas x sem
+            # hay distinto numero de alumno por semestre
                 # print() # un alumno
                 #print(type(e[])) # e[0] es (2016, 2), e[1] es un dataframe
 
+    def get_array(self):
+        return self._array
+
+    def _normalizacion(self, nota):
+        return ((nota - 1)/(7 - 1)) * (400 - 10) + 10
+
+    """def _variance(self):
+        lista = list()
+        for i in range(10):
+            lista.append(self.agrupar()[i][0])
+        return np.var(lista)
+        # notas = [map(lambda x: x[0], self.agrupar())]
+        # return notas
+        #return self._normalizacion(np.var([1, 2, 3]))"""
+
+    def draw_points(self):
+        for i in range(10):
+            self.chart.draw_circles(140 + i*120, self._normalizacion(self.get_array()[i][0]))
+
+    def draw_variances(self):
+        for i in range(10):
+            nota_norm = self._normalizacion(self.get_array()[i][0])
+            desviacion = self._normalizacion(self.get_array()[i][2])
+            self.chart.draw_variance(start=(
+                140 + i*120, nota_norm + desviacion), end=(
+                140 + i*120, nota_norm - desviacion))
+
+    def draw_grid(self):
+        for i in range(7):
+            self.chart.draw_line(self._normalizacion(i + 4))
 
 
 
 # alumno   ano  semestre evaluacion nota
 
 if __name__ == '__main__':
-    pa = ProgramacionAvanzada(PATH1)
+    pa = ProgramacionAvanzada(PATH1, "chart.svg")
     # data =
     # df = pd.DataFrame(data)
     # notas_no_p = df[(df.nota != "P") & (df.semestre == 1) & (df.ano == 2014)]
@@ -106,8 +155,18 @@ if __name__ == '__main__':
              ["2014-1", "8", "T", 5.2], ["2013-2", "6", "T", 5.0]]"""
     # print(pa.join_marks_by_semester(lista))
     # plt.plot(nota, an_o)
-    lista = pa.agrupar()
-    pa.get_graphics_points(lista)
+    pa.set_array()
+    lista = pa.get_array()
+    [print(n) for n in lista]
+    pa.chart.dwg.viewbox(width=WIDTH, height=HEIGHT)
+    pa.chart.draw_axes()
+    # print(pa.variance())
+    pa.draw_grid()
+    pa.draw_variances()
+    pa.draw_points()
+    pa.chart.dwg.save()
+    #print(lista)
+    #pa.get_graphics_points(lista)
 
 
 
