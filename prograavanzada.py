@@ -2,13 +2,16 @@ import pandas as pd
 from functools import reduce
 from graphics import *
 import numpy as np
-import matplotlib.pyplot as plt
+import json
+from pprint import pprint
 
 
 PATH1 = "datasets/Programación Avanzada.csv"
 PATH2 = "datasets/Arquitectura de Computadores.json"
 NAVALUES = ["#N/A", "#N/A N/A", "#NA", "-1.#IND", "-1.#QNAN", "-NaN", "-nan",
 "1.#IND", "1.#QNAN", "N/A", "NA", "NULL", "NaN", "n/a", "nan", "null"]
+COLOR1 = '#15959F'
+COLOR2 = '#F26144'
 
 
 class ProgramacionAvanzada:
@@ -65,7 +68,7 @@ class ProgramacionAvanzada:
                 dic[key].append(e[0])
             else:
                 dic[key].append(e[0])
-            print(dic[key])
+            # print(dic[key])
             """if not dic[e[0]].get(e[1], False):
                     dic[e[0]][e[1]] = list()
                     dic[e[0]][e[1]].append(e[2])
@@ -85,25 +88,20 @@ class ProgramacionAvanzada:
             suma_notas_sem = reduce(lambda x, y: float(x) + float(y), lista)
             no_ordenados.append((round(
                 suma_notas_sem/len(lista), 2), e[0], np.std(lista)))
-        i = 9
+            # print(no_ordenados)
+        self._array = no_ordenados
+        """i = 9
         while i >= 2:
             self._array.append(no_ordenados[i])
             self._array.append(no_ordenados[i-1])
             i -= 2
         self._array.append(no_ordenados[i])
-        self._array.append(no_ordenados[i - 1])
-
-
-            # print(suma_notas_sem/, e[0]) # imprime promedio de notas x sem
-            # hay distinto numero de alumno por semestre
-                # print() # un alumno
-                #print(type(e[])) # e[0] es (2016, 2), e[1] es un dataframe
+        self._array.append(no_ordenados[i - 1])"""
 
     def get_array(self):
         return self._array
 
-    def _normalizacion(self, nota):
-        return ((nota - 1)/(7 - 1)) * (400 - 10) + 10
+
 
     """def _variance(self):
         lista = list()
@@ -114,22 +112,108 @@ class ProgramacionAvanzada:
         # return notas
         #return self._normalizacion(np.var([1, 2, 3]))"""
 
-    def draw_points(self):
-        for i in range(10):
-            self.chart.draw_circles(140 + i*120, self._normalizacion(self.get_array()[i][0]))
+class SVGchart:
 
-    def draw_variances(self):
+    def __init__(self, pa, ac):
+        self.pa = pa
+        self.ac = ac
+        self.chart = Chart("chart.svg")
+
+    def _normalizacion(self, nota):
+        return ((nota - 1)/(7 - 1)) * (700 - 100) + 100
+
+    def draw_points(self, color1, color2):
         for i in range(10):
-            nota_norm = self._normalizacion(self.get_array()[i][0])
-            desviacion = self._normalizacion(self.get_array()[i][2])
+            self.chart.draw_circles(140 + i*120, 750 - self._normalizacion(
+                self.pa.get_array()[i][0]), color1)
+            self.chart.draw_circles(140 + i * 120, 750 - self._normalizacion(
+                self.ac.get_array()[i][0]), color2)
+
+    def draw_variances(self, color1, color2):
+        for i in range(10):
+            nota = self._normalizacion(self.pa.get_array()[i][0])
+            desviacion = self._normalizacion(self.pa.get_array()[i][2])
             self.chart.draw_variance(start=(
-                140 + i*120, nota_norm + desviacion), end=(
-                140 + i*120, nota_norm - desviacion))
+                140 + i*120, 750 - (nota + desviacion)), end=(
+                140 + i*120, 750 - (nota - desviacion)), color=color1)
+            nota = self._normalizacion(self.ac.get_array()[i][0])
+            desviacion = self._normalizacion(self.ac.get_array()[i][2])
+            self.chart.draw_variance(
+                start=(140 + i * 120, 750 - (nota + desviacion)),
+                end=(140 + i * 120, 750 - (nota - desviacion)), color=color2)
 
     def draw_grid(self):
         for i in range(7):
-            self.chart.draw_line(self._normalizacion(i + 4))
+            self.chart.draw_line_h(750 - self._normalizacion(i + 1))
+        for i in range(10):
+            self.chart.draw_line_v(140 + i * 120)
 
+    def draw_polyline(self, color1, color2):
+        for i in range(9):
+            nota1 = self._normalizacion(self.pa.get_array()[i][0])
+            nota2 = self._normalizacion(self.pa.get_array()[i + 1][0])
+            self.chart.draw_poly(start=(140 + i*120, 750 - nota1),
+                                 end=(140 + (i + 1)*120, 750 - nota2), color=color1)
+            nota1 = self._normalizacion(self.ac.get_array()[i][0])
+            nota2 = self._normalizacion(self.ac.get_array()[i + 1][0])
+            self.chart.draw_poly(start=(140 + i * 120, 750 - nota1),
+                                 end=(140 + (i + 1) * 120, 750 - nota2), color=color2)
+
+    def add_texts(self):
+        for i in range(10):
+            texto = self.pa.get_array()[i][1]
+            # print(texto) # texto[0] + "-" + texto[1]
+            self.chart.add_text(str(texto[0]) + "-" + str(texto[1]), insert=(
+                140 + i * 120, 770))
+            if i <= 6:
+                self.chart.add_text(str(i + 1), insert=(
+                    30, 755 - self._normalizacion(i + 1)))
+
+
+class ArquiComputadores:
+    def __init__(self):
+        self.data = None
+        self._array = list()
+
+    # 919 alumnos
+    def get_df(self):
+        with open("datasets/Arquitectura de Computadores.json", "r") as f:
+            rawstring = f.read()
+        dic = json.loads(rawstring) # dic es un diccionario
+        new_dic = {}
+        for k, v in dic.items():
+            if not "P" in v["interrogaciones"] and not "P" in v[ # hay 57 datos con nota P
+                "proyecto"] and not "P" in v["tareas"]:
+                v["interrogaciones"] = sum(map(lambda x: round(float(x.replace(
+                    ",", ".")), 2), v["interrogaciones"]))/len(v["interrogaciones"])
+                v["proyecto"] = sum(map(lambda x: round(float(x.replace(
+                    ",", ".")), 2), v["proyecto"]))/len(v["proyecto"])
+                v["tareas"] = sum(map(lambda x: round(float(x.replace(
+                    ",", ".")), 2), v["tareas"]))/len(v["tareas"])
+                v["nota_final"] = 0.3 * v["interrogaciones"] + 0.4 * v["proyecto"] + 0.3 * v["tareas"]
+                del v["interrogaciones"]
+                del v["proyecto"]
+                del v["tareas"]
+                new_dic[k] = v
+        self.data = pd.DataFrame(new_dic).transpose()
+        # print(self.data)
+        return self.data
+
+
+    def nota_prom_semestre_sd(self, df):
+        notas = df.ix[:, 1]
+        prom = round(notas.map(lambda x: x).sum()/len(df.index), 2)
+        sd = np.std(notas.map(lambda x: x))
+        return prom, sd
+
+    def set_array(self):
+        for e in self.data.groupby(['ano', 'semestre']):
+            par = self.nota_prom_semestre_sd(e[1])
+            self._array.append((par[0], e[0], par[1]))
+        return self._array
+
+    def get_array(self):
+        return self._array
 
 
 # alumno   ano  semestre evaluacion nota
@@ -157,16 +241,29 @@ if __name__ == '__main__':
     # plt.plot(nota, an_o)
     pa.set_array()
     lista = pa.get_array()
-    [print(n) for n in lista]
-    pa.chart.dwg.viewbox(width=WIDTH, height=HEIGHT)
-    pa.chart.draw_axes()
-    # print(pa.variance())
-    pa.draw_grid()
-    pa.draw_variances()
-    pa.draw_points()
-    pa.chart.dwg.save()
+    #[print(n) for n in lista]
+
+
+    ac = ArquiComputadores()
+    ac.get_df()
+    ac.set_array()
+    #print(ac.data)
+    lista = ac.get_array()
+    # [print(n) for n in lista]
+    #print(ac.set_array())
     #print(lista)
     #pa.get_graphics_points(lista)
+    chart = SVGchart(pa, ac)
+    chart.chart.dwg.viewbox(width=WIDTH, height=HEIGHT)
+    chart.chart.draw_axes()
+    chart.add_texts()
+    # print(pa.variance())
+    chart.chart.draw_rectangle()
+    chart.draw_grid()
+    chart.draw_polyline(COLOR1, COLOR2)
+    chart.draw_variances(COLOR1, COLOR2)  # 'blue', 'red'
+    chart.draw_points(COLOR1, COLOR2)
+    chart.chart.dwg.save()
 
 
 
