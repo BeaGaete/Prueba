@@ -1,0 +1,771 @@
+{
+  "nodes": [
+    {
+      "name": "d3",
+      "forks": 19815,
+      "stars": 79143
+    },
+    {
+      "name": "d3-queue",
+      "forks": 140,
+      "stars": 1385
+    },
+    {
+      "name": "d3-dsv",
+      "forks": 38,
+      "stars": 185
+    },
+    {
+      "name": "d3-geo-projection",
+      "forks": 144,
+      "stars": 677
+    },
+    {
+      "name": "d3-selection",
+      "forks": 208,
+      "stars": 267
+    },
+    {
+      "name": "d3-selection-multi",
+      "forks": 8,
+      "stars": 48
+    },
+    {
+      "name": "d3-bundler",
+      "forks": 3,
+      "stars": 33
+    },
+    {
+      "name": "d3-transition",
+      "forks": 36,
+      "stars": 110
+    },
+    {
+      "name": "d3-ease",
+      "forks": 23,
+      "stars": 368
+    },
+    {
+      "name": "d3-color",
+      "forks": 36,
+      "stars": 161
+    },
+    {
+      "name": "d3-array",
+      "forks": 91,
+      "stars": 145
+    },
+    {
+      "name": "d3-dispatch",
+      "forks": 11,
+      "stars": 42
+    },
+    {
+      "name": "d3-request",
+      "forks": 39,
+      "stars": 80
+    },
+    {
+      "name": "d3-timer",
+      "forks": 25,
+      "stars": 95
+    },
+    {
+      "name": "d3-random",
+      "forks": 17,
+      "stars": 60
+    },
+    {
+      "name": "d3-interpolate",
+      "forks": 29,
+      "stars": 211
+    },
+    {
+      "name": "d3-format",
+      "forks": 48,
+      "stars": 250
+    },
+    {
+      "name": "d3-scale",
+      "forks": 186,
+      "stars": 992
+    },
+    {
+      "name": "d3-time",
+      "forks": 25,
+      "stars": 139
+    },
+    {
+      "name": "d3-time-format",
+      "forks": 44,
+      "stars": 133
+    },
+    {
+      "name": "d3-quadtree",
+      "forks": 16,
+      "stars": 87
+    },
+    {
+      "name": "d3-hull",
+      "forks": 3,
+      "stars": 9
+    },
+    {
+      "name": "d3-voronoi",
+      "forks": 38,
+      "stars": 173
+    },
+    {
+      "name": "d3-path",
+      "forks": 18,
+      "stars": 112
+    },
+    {
+      "name": "d3-shape",
+      "forks": 179,
+      "stars": 1690
+    },
+    {
+      "name": "d3-polygon",
+      "forks": 11,
+      "stars": 47
+    },
+    {
+      "name": "d3-hierarchy",
+      "forks": 140,
+      "stars": 310
+    },
+    {
+      "name": "d3-force",
+      "forks": 160,
+      "stars": 464
+    },
+    {
+      "name": "d3-sankey",
+      "forks": 117,
+      "stars": 289
+    },
+    {
+      "name": "d3-chord",
+      "forks": 22,
+      "stars": 57
+    },
+    {
+      "name": "d3-hexbin",
+      "forks": 13,
+      "stars": 104
+    },
+    {
+      "name": "d3-axis",
+      "forks": 77,
+      "stars": 86
+    },
+    {
+      "name": "d3-collection",
+      "forks": 27,
+      "stars": 82
+    },
+    {
+      "name": "d3-geo",
+      "forks": 98,
+      "stars": 367
+    },
+    {
+      "name": "d3-drag",
+      "forks": 23,
+      "stars": 139
+    },
+    {
+      "name": "d3-zoom",
+      "forks": 74,
+      "stars": 159
+    },
+    {
+      "name": "d3-brush",
+      "forks": 28,
+      "stars": 63
+    },
+    {
+      "name": "d3-scale-chromatic",
+      "forks": 28,
+      "stars": 313
+    },
+    {
+      "name": "d3-hsv",
+      "forks": 4,
+      "stars": 11
+    },
+    {
+      "name": "d3-tile",
+      "forks": 9,
+      "stars": 52
+    },
+    {
+      "name": "d3-hcg",
+      "forks": 3,
+      "stars": 12
+    },
+    {
+      "name": "d3-fetch",
+      "forks": 13,
+      "stars": 99
+    },
+    {
+      "name": "d3-contour",
+      "forks": 29,
+      "stars": 214
+    },
+    {
+      "name": "d3-require",
+      "forks": 5,
+      "stars": 35
+    },
+    {
+      "name": "d3-scripts",
+      "forks": 3,
+      "stars": 10
+    },
+    {
+      "name": "d3-geo-polygon",
+      "forks": 5,
+      "stars": 38
+    },
+    {
+      "name": "d3-delaunay",
+      "forks": 9,
+      "stars": 142
+    },
+    {
+      "name": "d3-cam16",
+      "forks": 2,
+      "stars": 6
+    }
+  ],
+  "links": [
+    {
+      "source": "d3-array",
+      "target": "d3",
+      "dev": false
+  },
+  {
+    "source": "d3-axis",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-brush",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-chord",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-collection",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-color",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-contour",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-drag",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-dsv",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-ease",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-fetch",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-force",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-format",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-geo",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-hierarchy",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-interpolate",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-path",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-polygon",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-quadtree",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-random",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-scale",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-scale-chromatic",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-shape",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-time",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-time-format",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-timer",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-transition",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-voronoi",
+    "target": "d3",
+    "dev": false
+  },  
+  {
+    "source": "d3-zoom",
+    "target": "d3",
+    "dev": false
+  },
+  {
+    "source": "d3-scale",
+    "target": "d3-axis",
+    "dev": true
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-axis",
+    "dev": true
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3-brush",
+    "dev": false
+  },
+  {
+    "source": "d3-drag",
+    "target": "d3-brush",
+    "dev": false
+  },
+  {
+    "source": "d3-interpolate",
+    "target": "d3-brush",
+    "dev": false
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-brush",
+    "dev": false
+  },
+  {
+    "source": "d3-transition",
+    "target": "d3-brush",
+    "dev": false
+  },
+  {
+    "source": "d3-ease",
+    "target": "d3-bundler",
+    "dev": true
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-bundler",
+    "dev": true
+  },
+  {
+    "source": "d3-selection-multi",
+    "target": "d3-bundler",
+    "dev": true
+  },
+  {
+    "source": "d3-transition",
+    "target": "d3-bundler",
+    "dev": true
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-cam16",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-chord",
+    "dev": false
+  },
+  {
+    "source": "d3-path",
+    "target": "d3-chord",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-collection",
+    "dev": true
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-contour",
+    "dev": false
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3-drag",
+    "dev": false
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-drag",
+    "dev": false
+  },
+  {
+    "source": "d3-dsv",
+    "target": "d3-fetch",
+    "dev": false
+  },
+  {
+    "source": "d3-collection",
+    "target": "d3-force",
+    "dev": false
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3-force",
+    "dev": false
+  },
+  {
+    "source": "d3-quadtree",
+    "target": "d3-force",
+    "dev": false
+  },
+  {
+    "source": "d3-timer",
+    "target": "d3-force",
+    "dev": false
+  },
+  {
+    "source": "d3-queue",
+    "target": "d3-format",
+    "dev": true
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-geo",
+    "dev": false
+  },
+  {
+    "source": "d3-format",
+    "target": "d3-geo",
+    "dev": true
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-geo-polygon",
+    "dev": false
+  },
+  {
+    "source": "d3-geo",
+    "target": "d3-geo-polygon",
+    "dev": false
+  },
+  {
+    "source": "d3-geo-projection",
+    "target": "d3-geo-polygon",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-geo-projection",
+    "dev": false
+  },
+  {
+    "source": "d3-geo",
+    "target": "d3-geo-projection",
+    "dev": false
+  },
+  {
+    "source": "d3-format",
+    "target": "d3-geo-projection",
+    "dev": true
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-hcg",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-hierarchy",
+    "dev": true
+  },
+  {
+    "source": "d3-dsv",
+    "target": "d3-hierarchy",
+    "dev": true
+  },
+  {
+    "source": "d3-queue",
+    "target": "d3-hierarchy",
+    "dev": true
+  },
+  {
+    "source": "d3-random",
+    "target": "d3-hierarchy",
+    "dev": true
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-hsv",
+    "dev": false
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-interpolate",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-quadtree",
+    "dev": true
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-random",
+    "dev": true
+  },
+  {
+    "source": "d3-collection",
+    "target": "d3-request",
+    "dev": false
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3-request",
+    "dev": false
+  },
+  {
+    "source": "d3-dsv",
+    "target": "d3-request",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-sankey",
+    "dev": false
+  },
+  {
+    "source": "d3-collection",
+    "target": "d3-sankey",
+    "dev": false
+  },
+  {
+    "source": "d3-shape",
+    "target": "d3-sankey",
+    "dev": false
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-scale",
+    "dev": false
+  },
+  {
+    "source": "d3-collection",
+    "target": "d3-scale",
+    "dev": false
+  },
+  {
+    "source": "d3-format",
+    "target": "d3-scale",
+    "dev": false
+  },
+  {
+    "source": "d3-interpolate",
+    "target": "d3-scale",
+    "dev": false
+  },
+  {
+    "source": "d3-time",
+    "target": "d3-scale",
+    "dev": false
+  },
+  {
+    "source": "d3-time-format",
+    "target": "d3-scale",
+    "dev": false
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-scale",
+    "dev": true
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-scale-chromatic",
+    "dev": false
+  },
+  {
+    "source": "d3-interpolate",
+    "target": "d3-scale-chromatic",
+    "dev": false
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-selection-multi",
+    "dev": false
+  },
+  {
+    "source": "d3-transition",
+    "target": "d3-selection-multi",
+    "dev": false
+  },
+  {
+    "source": "d3-path",
+    "target": "d3-shape",
+    "dev": false
+  },
+  {
+    "source": "d3-polygon",
+    "target": "d3-shape",
+    "dev": true
+  },
+  {
+    "source": "d3-array",
+    "target": "d3-tile",
+    "dev": false
+  },
+  {
+    "source": "d3-time",
+    "target": "d3-time-format",
+    "dev": false
+  },
+  {
+    "source": "d3-queue",
+    "target": "d3-time-format",
+    "dev": true
+  },
+  {
+    "source": "d3-color",
+    "target": "d3-transition",
+    "dev": false
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3-transition",
+    "dev": false
+  },
+  {
+    "source": "d3-ease",
+    "target": "d3-transition",
+    "dev": false
+  },
+  {
+    "source": "d3-interpolate",
+    "target": "d3-transition",
+    "dev": false
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-transition",
+    "dev": false
+  },
+  {
+    "source": "d3-timer",
+    "target": "d3-transition",
+    "dev": false
+  },
+  {
+    "source": "d3-dispatch",
+    "target": "d3-zoom",
+    "dev": false
+  },
+  {
+    "source": "d3-drag",
+    "target": "d3-zoom",
+    "dev": false
+  },
+  {
+    "source": "d3-interpolate",
+    "target": "d3-zoom",
+    "dev": false
+  },
+  {
+    "source": "d3-selection",
+    "target": "d3-zoom",
+    "dev": false
+  },
+  {
+    "source": "d3-transition",
+    "target": "d3-zoom",
+    "dev": false
+  }  
+  ]
+}

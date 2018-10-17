@@ -1,0 +1,62 @@
+body {
+    margin: 5em auto;
+    max-width: 1500px;
+}
+
+circle {
+    fill: #FD8D3C;
+    stroke: white;
+    stroke-width: 4px;
+}
+
+
+
+
+text {
+    fill: black;
+    font-family: Ubuntu, sans-serif;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+#bar{
+    display:inline;
+}
+
+.active{
+  fill: #de7701;
+  stroke: #a80e06;
+  stroke-width: 3px;
+  opacity: 1
+}
+
+
+.container {
+  min-width: 1200px;
+  display: flex;
+  background-color: #ffffff;
+  color: #fff;
+  width: 1100px;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.row .col svg {
+  min-width: 600px;
+  flex: 1;
+  margin: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+@media all and (max-width:1200px) { /* Change this value as per your needs */
+  .row {
+    flex-direction: column
+  }
+}
