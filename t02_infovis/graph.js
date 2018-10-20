@@ -1,10 +1,20 @@
 
-var width = 700; //800
-var height = 800; // 600
+var width = 800; //700
+var height = 600; // 600
 //var color = d3.scaleOrdinal(d3.schemeCategory10);
-var color = d3.scaleSequential()
+/*var color = d3.scaleSequential()
         .domain([0, 59])
         .interpolator(d3.interpolateOranges);
+        .interpolateRgb(a, b)*/
+var color = d3.scaleLinear()
+        .domain([0, 59])
+        .range(['#ffffff', '#fd8d3c'])  // #FD8D3C  #a80e06
+        .interpolate(d3.interpolateHsl()); // interpolateHsl interpolateRgb */
+
+/*var color = d3.scaleLinear()
+        .domain([0, 59])
+        .range(['#ffffff', '#FD8D3C'])  // naranjo #FD8D3C   rojo #a80e06
+        .interpolate(d3.interpolateLab); // interpolateHsl interpolateRgb */
 
 
 
@@ -32,7 +42,7 @@ var labelLayout = d3.forceSimulation(label.nodes)
 
 var graphLayout = d3.forceSimulation(graph.nodes)
     .force("charge", d3.forceManyBody().strength(-2200))
-    .force("center", d3.forceCenter((width / 2) + 80, (height / 2) - 60))
+    .force("center", d3.forceCenter((width / 2) + 40, (height / 2) + 30))  // + 40 y -70
     .force("x", d3.forceX(width / 2).strength(1))   // d3.forceX(width / 2).strength(1)
     .force("y", d3.forceY(height / 2).strength(1))  // d3.forceY(height / 2).strength(1)
     .force("link", d3.forceLink(graph.links).id(function(d) {return d.name; }).distance(50).strength(1))
@@ -92,7 +102,7 @@ var link = container.append("g") //.attr("class", "links")
     .append("line")
     .attr("stroke-width", "4px")
     .attr("marker-start", "url(#arrow)")
-    .attr("stroke", function(d) { return d.dev == false ? "#9ECAE1" : "#305473"; }); // si es false #9ECAE1, true "#305473"
+    .attr("stroke", function(d) { return d.dev == false ? "#9ECAE1" : "#126bbf"; }); // si es false #9ECAE1, true "#305473"
 
 
 var node = container.append("g")
@@ -104,7 +114,7 @@ var node = container.append("g")
     //.attr("fill", FD8D3C)
     .attr('class', 'node')
     .attr('class', 'inactive ball')  // color activo en css #fill: #de7701;
-    .attr("fill", function(d) { return color(d.forks); });
+    .attr("fill", function(d) { return color(Math.log(d.forks) * 10); });  // d3plus.color.lighter(d,mod)  { return color(Math.log(d.forks) * 5); }
 
 const originx = node.x;
 const originy = node.y;
@@ -124,25 +134,27 @@ node.call(
 node.on('click', returnPosition);
 
 node.on('dblclick', (d) =>{
+        let count = 0;
         var cir = d3.selectAll('.inactive').filter(circle => circle == d);
         var index = d3.select(d3.event.target).datum().index;
 
         if (cir.size()){
             cir.attr('class', 'active')
-            .attr("fill", function(d) { return color(d.forks); })
+            .attr("fill", function(d) { return color(Math.log(d.forks) * 10); })
             actualizarBarchart(d, d.name, d)
             console.log(index)
             link.each(function(o, i) {
               if (o.target.index == index){
+                //console.log(o.target.stars, o.target.name)
+                //console.log(o.source.stars, o.source.name)
                 actualizarBarchart(o.source, o.source.name, d)
-                console.log(o.target.stars, o.target.name)
-                console.log(o.source.stars, o.source.name)
               }if(o.source.index == index){
                   actualizarBarchart(o.target, o.target.name, d)
                   //console.log(o.source.stars, o.source.name)
               }
             })
         }
+
       });
 
 var labelNode = container.append("g") //.attr("class", "labelNodes")

@@ -1,7 +1,7 @@
 const margin = {top: 30, right: 20, bottom: 0, left: 20}; // 30 20 0 20
 
 const WIDTH = 350;
-const HEIGHT = 700;
+const HEIGHT = 600;
 
 const widthb =  WIDTH - margin.left - margin.right;
 const heightb = HEIGHT - margin.top - margin.bottom;
@@ -20,14 +20,19 @@ const scale = d3.scaleLinear()
 
 const xAxis = d3.axisBottom(scale).ticks(7);
 const axis = containerBarchart.append('g')
-        .attr('class', 'axis axis--x')
+        .attr('class', 'axis axis--x');
+
+var color = d3.scaleLinear()
+        .domain([0, 59])
+        .range(['#ffffff', '#fd8d3c'])  // #FD8D3C
+        .interpolate(d3.interpolateHsl);
 
 axis.call(xAxis)
 
 containerBarchart.append("text")
         .attr("x", (widthb / 2))             
         .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")  
+        .attr("text-anchor", "start")  
         .style("font-size", "16px")
         .style("fill", "#555")
         .style("text-decoration", "underline")
@@ -53,8 +58,9 @@ const actualizarBarchart = (nodo, label, nodoclick) => {
     const enteringBar = data.enter()
         .append('rect')
         .attr('class', 'rect')
-        .attr('x', margin.right)
         .attr('y', (_, i, nodoclick) => i*30 + 15)
+        //.attr('fill', (_, i, nodoclick) => color(_.forks))
+        .attr('x', margin.right)
         .attr('height', 20)
         /*if(nodo == nodoclick){
             //enteringBar.attr('class', 'rectclick')
@@ -71,9 +77,9 @@ const actualizarBarchart = (nodo, label, nodoclick) => {
 
     const enteringtext = data.enter()
         .append('text')
-        .attr('class', 'text')
+        .attr('class', 'textbar')   // text-align: left;
         .attr('text-anchor', 'start')
-        .attr('x', margin.right + 40)
+        .attr('x', margin.right + 140)
         .attr('y', (_, i, nodoclick) => i*30 + 30);
 
 
@@ -120,6 +126,7 @@ const actualizarBarchart = (nodo, label, nodoclick) => {
          
          // or maybe also this.setAttribute('moved', 'no');
      })
+        //.attr('fill', d => color(d.nodo.forks))
         .style('stroke-width', function(d){
         if(d.nodo == d.nodoclick){
           return 6
@@ -148,15 +155,12 @@ const actualizarBarchart = (nodo, label, nodoclick) => {
 
     axis.attr('transform', `translate(0,${lista_final.length*30 + 15})`)
 
-    
-
-
 }
 
 const clear = () => {
     lista_final.length = 0;
     const dataRect = containerBarchart.selectAll('.rect').data(lista_final);
-    const dataText = containerBarchart.selectAll('.text').data(lista_final);
+    const dataText = containerBarchart.selectAll('.textbar').data(lista_final);
 
     dataRect.exit()
         .transition()
