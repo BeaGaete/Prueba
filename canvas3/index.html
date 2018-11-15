@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"/>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js'></script>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale.v1.min.js"></script>
+
+<!--script src="secondchart.js"></script-->
+</head>
+<body>
+  <div class="navbar">
+    <a id = 'main_title'>WatchMovies</a>
+    <a class="dropdown">
+      <!--h1>Movies</h1-->
+	    <button onclick="myFunction()" class="dropbtn">Genres</button>
+	    <div id="myDropdown" class="dropdown-content">
+	      <a href="#" onClick = make_graph("Action");>Action</a>
+	      <a href="#" onClick = make_graph("Adventure");>Adventure</a>
+	      <a href="#" onClick = make_graph("Animation");>Animation</a>
+	      <a href="#" onClick = make_graph("Horror");>Horror</a>
+	      <a href="#" onClick = make_graph("Music");>Music</a>
+	      <a href="#" onClick = make_graph("Romance");>Romance</a>
+	      <a href="#" onClick = make_graph("Thriller");>Thriller</a>
+	      <a href="#" onClick = make_graph("Animation");>Animation</a>
+	      <a href="#" onClick = make_graph("War");>War</a>
+	      <a href="#" onClick = make_graph("Western");>Western</a>
+	    </div>
+	  </div>
+	</a>
+  </div>
+  <div class="row">
+    <div class = 'container'>
+      <div class="poster">
+        <div class="row">
+            <div>
+              <img src =http://www.freepostertemplates.co.uk/wp-content/previews/poster-template-movie-poster.jpg style = "width:175px;height:210px;" id = 'poster'/>
+              <p id = "title">Title</p>
+              <p id = "genre">Genre</p>
+              <p id = "year">Year</p>
+              <p id = "budget">Budget</p>
+              <p id = "overview">Overview</p>
+            </div>
+        </div>
+      </div>
+      <div class="graph">
+        <div class="row">
+        	<!--canvas width="1000" height="800"></canvas-->
+        	<!--div id='container'></div-->
+          <div id='container'></div>
+          <div id="tooltip"></div>
+        	<script src="script.js"></script>
+          <!--svg id='viz' display="block"></svg> <! le agregue display="block" -->
+        </div>
+        <!--div class="row">
+          <svg id='bar' display="block"></svg>
+        </div>-->
+      </div>
+    </div>
+  </div>
+  <div class = "row">
+    <svg id = 'bar' display = "block"></svg>
+  </div>
+</body>
+</html>
+</html>

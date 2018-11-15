@@ -1,0 +1,226 @@
+html { overflow-y: hidden; }
+ /* The navigation bar */
+
+.hiddenCanvas{
+      display: none;
+    }
+
+div#tooltip {
+  position: absolute;        
+  display: inline-block;
+  padding: 10px;
+  font-family: 'Open Sans' sans-serif;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 2px;
+    pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+
+
+.navbar {
+    overflow: hidden;
+    background-color: #ffffff;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    border-bottom:1px solid #7e898d;
+    padding-bottom: 5px;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    float: left;
+    display: block;
+    color: #7e898d;
+    text-align: center;
+    padding: 16px 30px;
+    text-decoration: none;
+    font-family: "Helvetica", monospacef;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+    color: #ee057a;
+}
+
+
+
+/* Main content */
+.main {
+    margin-top: 30px; /* Add a top margin to avoid content overlay */
+}
+
+
+.poster {
+    float: left;
+    width: 20%;
+    background-color: #ffffff;
+    height: 100%;
+    margin-top: 60px;
+    overflow: scroll;
+}
+
+.graph {
+    float: right;
+    width: 80%;
+    background-color: #ffffff;
+    height: 1000px;
+    overflow: scroll;
+}
+
+#title{
+    margin-left: 20px;
+    margin-top: 20px;
+    text-align: center;
+    width: 175px;
+    border: 2px solid rgb(255,255,255);
+    font-family: "Helvetica", monospacef;
+    text-align: justify;
+    color: #0aafe7;
+}
+
+#main_title{
+
+  font-family: 'Open Sans', sans-serif;
+  color: #555;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 50px;
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1;
+  text-shadow: #EDEDED 3px 2px 0;
+  position: relative;
+}
+
+#genre, #year, #budget{
+  margin-left: 20px;
+  margin-top: 20px;
+  text-align: center;
+  width: 175px;
+  border: 1px solid rgb(255,255,255);
+  font-family: "Helvetica", monospacef;
+  text-align: justify;
+  color: #7e898d;
+  font-size: 12px;
+}
+
+.clearbutton {
+}
+
+#overview{
+  margin-left: 20px;
+  margin-top: 20px;
+  text-align: center;
+  width: 175px;
+  height: 160px;
+  border: 1px solid rgb(255,255,255);
+  font-family: "Helvetica", monospacef;
+  text-align: justify;
+  color: #7e898d;
+  font-size: 12px;
+}
+
+
+#viz{
+  margin-left: 30px;
+  margin-right: 0px;
+  margin-top: 10px;
+  width: 1165px;
+
+
+}
+
+#poster{
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+body{
+  background-color: rgb(220,220,220);
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #7e898d;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #ee057a;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  margin-left: 0px;
+  margin-top: 0px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+.active{
+  fill: #de7701;
+  stroke: #a80e06;
+  stroke-width: 1px;
+  opacity: 1
+}
+
+#bar{
+    margin-left: 30px;
+    margin-right: 0px;
+    margin-top: 10px;
+    width: 1165px;
+    height: 700px;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
