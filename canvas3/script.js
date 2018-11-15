@@ -42,8 +42,8 @@ const genreColor = {'Action': "#ee057a", 'Adventure': '#ffd203', 'Animation': '#
 const genreColorRGB = {'Action': [238, 5, 7], 'Adventure': [255, 210, 3], 'Animation': [109, 201, 200], 'Horror': [67, 183, 122], 'Music': [251,112, 34], 'Romance': [125,63, 26], 
 'Thriller': [204, 118, 157], 'War': [39, 109, 119], 'Western': [185, 30, 70]}
 
-const genreColorInt = {'Action': 1, 'Adventure': 2, 'Animation': 3, 'Horror': 4, 'Music': 5, 'Romance': 6, 
-'Thriller': 7, 'War': 8, 'Western': 9}
+const genreColorInt = {'Action': 0, 'Adventure': 1, 'Animation': 2, 'Horror': 3, 'Music': 4, 'Romance': 5, 
+'Thriller': 6, 'War': 7, 'Western': 8}
 
 const allGenres = ['Action', 'Adventure', 'Animation', 'Horror', 'Music', 'Romance', 
 'Thriller', 'War', 'Western']
@@ -96,12 +96,12 @@ d3.dsv(",", "new_movies_metadata.csv", function(d) {
 
 	var data = [];
 	var count = 0;
-	const radius = 2.5;
+	const radius = 3.4;
 	const theta = Math.PI * (3 - Math.sqrt(5));
 	d3.range(6859).forEach(function(el){
 		count+= 1;
-		var r = 10 * Math.sqrt(count), a = theta * count;
-		data.push({ x: width / 2 + r * Math.cos(a), y: height / 2 + r * Math.sin(a) - 100, r: radius, index: count -1 });
+		var r = radius * Math.sqrt(count), a = theta * count; // width / 2 + r * Math.cos(a) r = radius * Math.sqrt(i), a = theta * i;
+		data.push({ x: width / 2 + r * Math.cos(a) + 125, y: height / 2 + r * Math.sin(a) - 120, r: radius, index: count -1 });
 	});
 	console.log(data);
 
@@ -130,6 +130,8 @@ d3.dsv(",", "new_movies_metadata.csv", function(d) {
 		// map to track color the nodes.
 	var colorToNode = {};
 	// function to create new colors for picking
+
+	var otherFilms = [];
 	var nextCol = 1;
 	function genColor(){
 		var ret = [];
@@ -197,14 +199,19 @@ d3.dsv(",", "new_movies_metadata.csv", function(d) {
 		var context = canvas.node().getContext('2d');
 
 		context.clearRect(0, 0, width, height);
-
 		var elements = custom.selectAll('custom.circle');
 		elements.each(function(d,i){
 			var node = d3.select(this);
-			context.fillStyle = hidden ? node.attr('fillStyleHidden') : 'steelblue';
+			if (otherFilms.includes(i)){
+				context.fillStyle = hidden ? node.attr('fillStyleHidden') : genreColor[dataMovies[i].genres.split(" ")[0]];
+			}else{
+				context.fillStyle = hidden ? node.attr('fillStyleHidden') : 'steelblue';
+			}
 			context.beginPath();
 			context.arc(node.attr('x'), node.attr('y'), node.attr('r'), 0, 2*Math.PI);
+			context.closePath();
 			context.fill();
+
 		})
 	}
 
@@ -212,13 +219,22 @@ d3.dsv(",", "new_movies_metadata.csv", function(d) {
 	    .scaleExtent([1 / 2, 4])
 	    .on("zoom", zoomed));
 
+	var panx;
+	var pany;
+	var scale;
+
 	function zoomed() {
 	  context.save();
 	  context.clearRect(0, 0, width, height);
-	  context.translate(d3.event.transform.x, d3.event.transform.y);
-	  context.scale(d3.event.transform.k, d3.event.transform.k);
+	  context.translate(d3.event.transform.x, d3.event.transform.y); //pan x pan y
+	  context.scale(d3.event.transform.k, d3.event.transform.k); // scalefactor
+	  panx = d3.event.transform.x;
+	  pany = d3.event.transform.y;
+	  scale = d3.event.transform.k;
 	  draw(mainCanvas, false);
 	  context.restore();
+	  //console.log(d3.event.transform.x);
+	  //console.log(d3.event.transform.y);
 	}
 
 	hiddenCanvas.call(d3.zoom()
@@ -230,6 +246,9 @@ d3.dsv(",", "new_movies_metadata.csv", function(d) {
 	  contextHidden.clearRect(0, 0, width, height);
 	  contextHidden.translate(d3.event.transform.x, d3.event.transform.y);
 	  contextHidden.scale(d3.event.transform.k, d3.event.transform.k);
+	  panx = d3.event.transform.x;
+	  pany = d3.event.transform.y;
+	  scale = d3.event.transform.k;
 	  draw(hiddenCanvas, true);
 	  contextHidden.restore();
 	}
@@ -238,28 +257,89 @@ d3.dsv(",", "new_movies_metadata.csv", function(d) {
 		return dataMovies[index].name;
 	}
 
+	function getYear(index, dataMovies) {
+		return dataMovies[index].year;
+	}
+
+	function getGenre(index, dataMovies) {
+		return dataMovies[index].genres.split(" ")[0];
+	}
+
+	function getBudget(index, dataMovies) {
+		return dataMovies[index].budget;
+	}
+
+	function getOverview(index, dataMovies) {
+		return dataMovies[index].overview;
+	}
+
+	function getPosterPath(index, dataMovies) {
+		return dataMovies[index].poster_path;
+	}
+
+	function getFimlsSameGenre(index, genre, dataMovies) {
+		var others = [];
+		for (var i = 0; i <= dataMovies.length - 1; i++) {
+			//console.log(dataMovies[i].genres);
+			if(dataMovies[i].genres){
+				if(dataMovies[i].genres.split(" ").includes(genre)){
+					others.push(i);
+				}
+			}
+		}
+		return others;
+	}
+
 	d3.select('.mainCanvas').on('mousemove', function(){
 		draw(hiddenCanvas, true);
 		var mouseX = d3.event.layerX || d3.event.offsetX;
 		var mouseY = d3.event.layerY || d3.event.offsety;
+
+		if(!panx){
+			panx = 0;
+		}else if(!pany){
+			pany = 0;
+		}
+
+		if(!scale){
+			scale = 1;
+		}
+
+		var mouseXT=parseInt((mouseX-panx)/scale);
+        var mouseYT=parseInt((mouseY-pany)/scale);
 
 		var hiddenCtx = hiddenCanvas.node().getContext('2d');
 		var col = hiddenCtx.getImageData(mouseX, mouseY, 1, 1).data;
 
 		var colKey = 'rgb(' + col[0] + ',' + col[1] + ',' + col[2] + ')';
 		var nodeData = colorToNode[colKey];
-
+		if(nodeData){
+			otherFilms = getFimlsSameGenre(nodeData.index, getGenre(nodeData.index, dataMovies), dataMovies);
+		}
 		if (nodeData){
 			console.log(nodeData);
 			d3.select('#tooltip')
-				.style('opacity', 0.8)
-				.style('top', d3.event.pageY + 5 + 'px')
-				.style('left', d3.event.pageX + 5 + 'px')
-				.html('x: ' + nodeData.x + '<br>' + 'y: ' + nodeData.y + '<br>' + 'radius: ' + nodeData.r + '<br>' + 'index: ' + nodeData.index + '<br>' + 'color: ' + nodeData.hiddenCol + '<br>' + 'title: ' + getTitle(nodeData.index, dataMovies));
+				.attr('width', 50)
+				.attr('height', 70)
+				.style('opacity', 0.5)
+				.style('top', 90 + 'px') // d3.event.pageY + 5
+				.style('left', 30 + 'px') // nodeData.x e var string = "<img src= + " yourImagePath " + />";
+				.html("<img class='resize' src=" + "http://image.tmdb.org/t/p/w500/coINnuCzcw5FMHBty8hcudMOBnO.jpg />" 
+					+ '<br>' + 'x: ' + nodeData.x + '<br>' + 'y: ' + nodeData.y + '<br>' + 'radius: ' + nodeData.r 
+					+ '<br>' + 'index: ' + nodeData.index + '<br>' + 'color: ' + nodeData.hiddenCol + '<br>' 
+					+ 'title: ' + getTitle(nodeData.index, dataMovies) + '<br>' + 'genre: ' + getGenre(nodeData.index, dataMovies) 
+					+ '<br>' + 'year: ' + getYear(nodeData.index, dataMovies) 
+					+ '<br>' + 'budget: ' + getBudget(nodeData.index, dataMovies) + '<br>' + 'overview: ' 
+					+ getOverview(nodeData.index, dataMovies));
 		} else {
 			d3.select('#tooltip')
 				.style('opacity', 0);
 		}
+		console.log(mouseX);
+		console.log(mouseY);
+		console.log(mouseXT);
+		console.log(mouseYT);
+		draw(mainCanvas, false);
 
 	})
 });

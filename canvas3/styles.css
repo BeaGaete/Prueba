@@ -19,6 +19,11 @@ div#tooltip {
   z-index: 1;
 }
 
+img.resize {
+  width:200px;
+  height:300px;
+}
+
 
 .navbar {
     overflow: hidden;
@@ -56,7 +61,7 @@ div#tooltip {
 
 .poster {
     float: left;
-    width: 20%;
+    width: 0%;
     background-color: #ffffff;
     height: 100%;
     margin-top: 60px;
@@ -65,7 +70,7 @@ div#tooltip {
 
 .graph {
     float: right;
-    width: 80%;
+    width: 100%;
     background-color: #ffffff;
     height: 1000px;
     overflow: scroll;
